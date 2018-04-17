@@ -1,0 +1,80 @@
+<div class="ccr-table" [class.ccr-loading]="source.isLoading" [class.ccr-empty]="source.isEmpty" [class.ccr-errors]="source.hasErrors()">
+
+  <mat-table [dataSource]="source" fxHide fxShow.xs>
+
+    <ng-container cdkColumnDef="date">
+      <mat-header-cell *cdkHeaderCellDef>{{'GLOBAL.DATE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'GLOBAL.DATE' | translate}}</span> {{row.date | amUtc | amDateFormat:'dddd, MMM D'}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container *ngFor="let supplement of source.supplements" cdkColumnDef="{{supplement.supplement.fullName.split(' ').join('_')}}">
+      <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{supplement.supplement.fullName}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign="center center" fxFlex.xs="100%">
+        <span>{{supplement.supplement.fullName}}</span>
+        <mat-icon class="done" *ngIf="row.multiVitamin > row.dailyGoal; else partial">done</mat-icon>
+        <ng-template #partial>{{row[supplement.supplement.fullName.split(' ').join('_')] || '0'}}/{{supplement.dosage}}</ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *cdkHeaderRowDef="source.columns" fxHide.xs></mat-header-row>
+    <mat-row fxLayout="row" fxLayoutWrap *cdkRowDef="let row; columns: source.columns; let even = even; let odd = odd"
+      [ngClass]="{
+        'row-even': even,
+        'row-odd': odd
+      }"></mat-row>
+  </mat-table>
+
+  <div fxLayout="row" fxShow fxHide.xs>
+    <div>
+
+      <mat-table [dataSource]="source">
+        <ng-container cdkColumnDef="date">
+          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign=" center">{{'GLOBAL.DATE' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+            <span>{{'GLOBAL.DATE' | translate}}</span> {{row.date | amUtc | amDateFormat:'dddd, MMM D'}}
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="heading" fxHide.xs></mat-header-row>
+        <mat-row fxLayout="row" fxLayoutWrap *cdkRowDef="let row; columns: heading; let even = even; let odd = odd"
+          [ngClass]="{
+            'row-even': even,
+            'row-odd': odd
+          }">
+        </mat-row>
+      </mat-table>
+
+    </div>
+    <div fxFlex class="supplement-table">
+
+      <mat-table [dataSource]="source">
+        <ng-container *ngFor="let supplement of source.supplements" cdkColumnDef="{{supplement.supplement.fullName.split(' ').join('_')}}">
+          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{ supplement.supplement.fullName }}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row" fxLayoutAlign="center center" fxFlex.xs="100%">
+            <span>{{supplement.supplement.fullName}}</span>
+            <mat-icon class="done" *ngIf="row.multiVitamin > row.dailyGoal; else partial">done</mat-icon>
+            <ng-template #partial>{{row[supplement.supplement.fullName.split(' ').join('_')] || '0'}}/{{supplement.dosage}}</ng-template>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="supplements" fxHide.xs></mat-header-row>
+        <mat-row fxLayout="row" fxLayoutWrap *cdkRowDef="let row; columns: supplements; let even = even; let odd = odd"
+          [ngClass]="{
+            'row-even': even,
+            'row-odd': odd
+          }">
+        </mat-row>
+      </mat-table>
+
+    </div>
+  </div>
+
+  <div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="source.isLoading || source.hasErrors()">
+    <mat-spinner *ngIf="source.isLoading"></mat-spinner>
+    <div class="ccr-errors" *ngIf="!source.isLoading && source.hasErrors()">
+      <span *ngFor="let error of source.getErrors()">{{error | translate}}</span>
+    </div>
+  </div>
+</div>

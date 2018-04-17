@@ -1,0 +1,23 @@
+
+<div class="ccr-heading">
+  <div class="ccr-title" fxLayout="row" fxLayoutAlign=" end" fxLayoutWrap.xs>
+    <h2 fxFlex>{{'GLOBAL.COACHES' | translate}}</h2>
+
+    <a mat-button color="primary" class="ccr-icon-button"
+    fxFlex="0 0 auto" fxFlex.xs="100%"
+    *ngIf="permissions.admin" (click)="createDialog()">
+      <mat-icon>add</mat-icon>
+      <span>{{'BOARD.COACH_NEW' | translate}}</span>
+    </a>
+  </div>
+  <div class="ccr-htools" fxLayout="row" fxLayoutAlign=" center">
+    <mat-form-field class="ccr-mini" floatPlaceholder="never">
+      <mat-select placeholder="{{'BOARD.CLINIC' | translate}}" [(ngModel)]="clinic" (change)="selectClinic(clinic)">
+        <mat-option *ngFor="let clinic of clinics" [value]="clinic.value">{{ clinic.viewValue }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ccr-paginator #paginator [length]="source.total" [pageIndex]="0" [pageSize]="20"></ccr-paginator>
+  </div>
+</div>
+
+<app-coaches-table [source]="source" (onSorted)="onSorted($event)"></app-coaches-table>

@@ -1,0 +1,19 @@
+
+<div class="ccr-heading">
+  <div class="ccr-title" fxLayout="row" fxLayoutAlign=" end" fxLayoutWrap.xs>
+    <h2 fxFlex>{{'SIDENAV.REPORTS' | translate}}</h2>
+  </div>
+</div>
+<div class="report-heading" fxLayoutAlign="center center">
+  <mat-icon>people outline</mat-icon>
+  <h4 fxFlex>{{'REPORTS.TITLE_ENROLLMENTS' | translate}}</h4>
+</div>
+
+<app-reports-enrollment-chart></app-reports-enrollment-chart>
+
+<div class="report-heading" fxLayoutAlign="center center">
+  <mat-icon>people outline</mat-icon>
+  <h4 fxFlex>{{'REPORTS.TITLE_SIGNUPS' | translate}}</h4>
+</div>
+
+<app-reports-signups-chart></app-reports-signups-chart>

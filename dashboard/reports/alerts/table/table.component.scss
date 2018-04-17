@@ -1,0 +1,17 @@
+.ccr-table {
+  mat-table {
+    .mat-column-type {
+      flex: 2 !important;
+      img {
+        margin-right: 10px;
+      }
+    }
+    .mat-column-details {
+      flex: 2 !important;
+    }
+    .mat-column-actions {
+      min-width: 50px;
+      max-width: 50px;
+    }
+  }
+}

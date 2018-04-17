@@ -1,0 +1,23 @@
+<!-- CAUTION: any change in this layout needs CSS sync -->
+<mat-sidenav-container fxFlexFill>
+
+  <mat-sidenav opened="true" mode="side" (click)="openSidenav($event)" [class.open]="isSidenavOpen" disableClose="true">
+    <app-sidenav #sidenav [isOpen]="isSidenavOpen"></app-sidenav>
+  </mat-sidenav>
+
+  <div fxLayout="column">
+
+    <mat-toolbar>
+      <app-menubar></app-menubar>
+    </mat-toolbar>
+
+    <div fxLayout="row">
+      <div fxFlex>
+        <router-outlet></router-outlet>
+      </div>
+      <app-right-panel *ngIf="rightPanel" [class.open]="isRightPanelOpen"></app-right-panel>
+    </div>
+  </div>
+</mat-sidenav-container>
+
+<app-footer></app-footer>

@@ -1,0 +1,10 @@
+
+<mat-form-field floatPlaceholder="never" *ngIf="clinics.length > 1">
+  <mat-select [(ngModel)]="clinic" (change)="selectClinic(clinic)" [placeholder]="'BOARD.CLINIC' | translate">
+    <mat-option *ngFor="let clinic of clinics" [value]="clinic.value">{{ clinic.viewValue }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<app-dieter-journal-supplements-table
+  [source]="source"
+></app-dieter-journal-supplements-table>

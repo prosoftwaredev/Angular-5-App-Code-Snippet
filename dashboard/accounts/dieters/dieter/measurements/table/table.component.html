@@ -1,0 +1,179 @@
+<div class="ccr-table ccr-table-stats" [class.ccr-loading]="source?.isLoading" [class.ccr-empty]="source?.isEmpty" [class.ccr-errors]="source?.hasErrors()">
+
+  <mat-table [dataSource]="source">
+
+    <ng-container cdkColumnDef="date">
+      <mat-header-cell *cdkHeaderCellDef>{{'GLOBAL.DATE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'GLOBAL.DATE' | translate}}</span> {{row.date | amUtc | amDateFormat:'MMM D, YYYY'}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="weight">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.WEIGHT' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.WEIGHT' | translate}}</span>
+        <ng-container *ngIf="row.weight || row.weight === 0">{{(row.weight * 0.00220462).toFixed(1)}} {{'UNIT.LBS' | translate}}</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="bmi">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.BMI' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.BMI' | translate}}</span>
+        <ng-container *ngIf="row.bmi || row.bmi === 0">{{(row.bmi / 1000).toFixed(1)}}</ng-container>
+        <!-- <ng-container *ngIf="row.visceralFatPercentage || row.visceralFatPercentage === 0">({{row.visceralFatPercentage}}%)</ng-container> -->
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="bodyFat">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.BODY_FAT' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.BODY_FAT' | translate}}</span>
+        <ng-container *ngIf="row.bodyFat || row.bodyFat === 0">{{ (row.bodyFat / 1000).toFixed(1) }}%</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="leanMass">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.LEAN_MASS' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.LEAN_MASS' | translate}}</span>
+        <ng-container *ngIf="row.bodyFat || row.bodyFat === 0">{{ ((100000 - row.bodyFat) / 1000).toFixed(1) }}%</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="waterPercentage">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.HYDRATION' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.HYDRATION' | translate}}</span>
+        <ng-container *ngIf="row.waterPercentage || row.waterPercentage === 0">{{ (row.waterPercentage / 1000).toFixed(2) }}%</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="waist">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.WAIST' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.WAIST' | translate}}</span>
+        <ng-container *ngIf="row.waist || row.waist === 0">{{(row.waist * 0.0393701).toFixed(1)}}″</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="arm">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.ARM' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.ARM' | translate}}</span>
+        <ng-container *ngIf="row.arm || row.arm === 0">{{(row.arm * 0.0393701).toFixed(1)}}″</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="chest">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.CHEST' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.CHEST' | translate}}</span>
+        <ng-container *ngIf="row.chest || row.chest === 0">{{(row.chest * 0.0393701).toFixed(1)}}″</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="hip">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.HIP' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.HIP' | translate}}</span>
+        <ng-container *ngIf="row.hip || row.hip === 0">{{(row.hip * 0.0393701).toFixed(1)}}″</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="thigh">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.THIGH' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.THIGH' | translate}}</span>
+        <ng-container *ngIf="row.thigh || row.thigh === 0">{{(row.thigh * 0.0393701).toFixed(1)}}″</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="steps">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.STEPS' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.STEPS' | translate}}</span>
+        {{row.stepTotal}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="average">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.STEP_AVERAGE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.STEP_AVERAGE' | translate}}</span>
+        {{row.stepAverage}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="distance">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.DISTANCE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.DISTANCE' | translate}}</span>
+        {{row.distanceTotal}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="calories">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.CALORIES' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.CALORIES' | translate}}</span>
+        {{row.calories || 0}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="protein">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.PROTEIN' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'BOARD.PROTEIN' | translate}}</span>
+        {{ (row.protein / 1000).toFixed(1) }} {{'UNIT.G' | translate}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="carbohydrates">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.CARBS' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.CARBS' | translate}}</span>
+        {{ (row.carbohydrates / 1000).toFixed(1)}} {{'UNIT.G' | translate}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="totalFat">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.FAT' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'BOARD.FAT' | translate}}</span>
+        {{ (row.totalFat / 1000).toFixed(1)}} {{'UNIT.G' | translate}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="total">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.SLEEP' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.SLEEP' | translate}}</span>
+        <ng-container *ngIf="row.sleepMinutes || row.sleepMinutes === 0">{{(row.sleepMinutes / 3600).toFixed(1)}}</ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="sleepQuality">
+      <mat-header-cell *cdkHeaderCellDef>{{'MEASUREMENT.RESTFULNESS' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'MEASUREMENT.RESTFULNESS' | translate}}</span>
+        {{row.sleepQuality}}%
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *cdkHeaderRowDef="columns" fxHide.xs></mat-header-row>
+    <mat-row fxLayout="row" fxLayoutWrap *cdkRowDef="let row; columns: columns; let even = even; let odd = odd"
+      [ngClass]="{
+        'row-even': even,
+        'row-odd': odd
+      }"></mat-row>
+  </mat-table>
+
+  <div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="source?.isLoading || source?.hasErrors()">
+    <mat-spinner *ngIf="source.isLoading"></mat-spinner>
+    <div class="ccr-errors" *ngIf="!source.isLoading && source.hasErrors()">
+      <span *ngFor="let error of source.getErrors()">{{error | translate}}</span>
+    </div>
+  </div>
+</div>

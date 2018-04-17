@@ -1,0 +1,154 @@
+<div>
+  <h3>
+    <mat-icon>people outline</mat-icon>
+    <span>{{'RIGHT_PANEL.FOR_THIS_PATIENT' | translate}}</span>
+  </h3>
+
+  <h4 matSubheader>
+    <mat-icon>add_circle_outline</mat-icon>
+    <span>{{ 'BOARD.NEW_MEASUREMENTS' | translate }}</span>
+  </h4>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" formControlName="recordedAt" [placeholder]="'GLOBAL.DATE' | translate" readonly="true">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker type="date" startView="month" #picker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="component-heading">
+      <span class="mat-form-field-placeholder">{{ 'BOARD.CATEGORY' | translate }}</span>
+    </div>
+    <mat-radio-group fxLayout='column' [(ngModel)]="measurementType" [ngModelOptions]="{standalone: true}">
+      <mat-radio-button value="circumference" (click)="initForm('circumference')">{{'GLOBAL.CIRCUMFERENCE' | translate}}</mat-radio-button>
+      <mat-radio-button value="composition" (click)="initForm('composition')">{{'GLOBAL.COMPOSITION' | translate}}</mat-radio-button>
+      <mat-radio-button value="energy" (click)="initForm('energy')">{{'GLOBAL.ENERGY' | translate}}</mat-radio-button>
+    </mat-radio-group>
+
+    <div formArrayName="circumference">
+      <div *ngFor="let detail of circumference.controls; let i=index" [formGroupName]="i">
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="waist" numberOnly
+          [placeholder]="'MEASUREMENT.WAIST' | translate">
+          <span matSuffix>{{ 'UNIT.INCHES' | translate }}</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="arm" numberOnly
+          [placeholder]="'MEASUREMENT.ARM' | translate">
+          <span matSuffix>{{ 'UNIT.INCHES' | translate }}</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="chest" numberOnly
+          [placeholder]="'MEASUREMENT.CHEST' | translate">
+          <span matSuffix>{{ 'UNIT.INCHES' | translate }}</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="hip" numberOnly
+          [placeholder]="'MEASUREMENT.HIP' | translate">
+          <span matSuffix>{{ 'UNIT.INCHES' | translate }}</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="thigh" numberOnly
+          [placeholder]="'MEASUREMENT.THIGH' | translate">
+          <span matSuffix>{{ 'UNIT.INCHES' | translate }}</span>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div formArrayName="composition">
+      <div *ngFor="let detail of composition.controls; let i=index" [formGroupName]="i">
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="weight" numberOnly
+          [placeholder]="'MEASUREMENT.WEIGHT' | translate" (change)="onCompositionChange('weight')">
+          <span matSuffix>{{ 'UNIT.LBS' | translate }}</span>
+          <mat-error>{{ 'NOTIFY.ERROR.VALUE_NOT_EMPTY' | translate }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="bodyFat" numberOnly
+          [placeholder]="'RIGHT_PANEL.BODY_FAT_PERC' | translate" (change)="onCompositionChange('bodyFat')">
+          <span matSuffix>%</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="bodyFatLbs" numberOnly
+          [placeholder]="'RIGHT_PANEL.BODY_FAT_LBS' | translate" (change)="onCompositionChange('bodyFatLbs')">
+          <span matSuffix>{{ 'UNIT.LBS' | translate }}</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="leanMass" numberOnly
+          [placeholder]="'RIGHT_PANEL.LEAN_MASS_PERC' | translate" (change)="onCompositionChange('leanMass')">
+          <span matSuffix>%</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="leanMassLbs" numberOnly
+          [placeholder]="'RIGHT_PANEL.LEAN_MASS_LBS' | translate" (change)="onCompositionChange('leanMassLbs')">
+          <span matSuffix>{{ 'UNIT.LBS' | translate }}</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="waterPercentage" numberOnly
+          [placeholder]="'RIGHT_PANEL.BODY_WATER_PERC' | translate" (change)="onCompositionChange('waterPercentage')">
+          <span matSuffix>%</span>
+        </mat-form-field>
+
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="waterLbs" numberOnly
+          [placeholder]="'RIGHT_PANEL.BODY_WATER_LBS' | translate" (change)="onCompositionChange('waterLbs')">
+          <span matSuffix>{{ 'UNIT.LBS' | translate }}</span>
+        </mat-form-field>
+      </div>
+    </div>
+    <div formArrayName="energy">
+      <div *ngFor="let detail of energy.controls; let i=index" [formGroupName]="i">
+        <mat-form-field class="ccr-align-right">
+          <input matInput formControlName="steps" numberOnly [wholeNumber]="true"
+          [placeholder]="'MEASUREMENT.STEPS' | translate">
+          <span matSuffix>{{ 'UNIT.STEPS' | translate }}</span>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+            formControlName="sleepStartTime"
+            [matDatepicker]="startPicker"
+            (dateChange)="sleepStartTimeChange($event)"
+            [placeholder]="'MEASUREMENT.SLEEP_STARTTIME' | translate"
+            readonly="true">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker type="datetime" startView="clock" #startPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+            formControlName="sleepEndTime"
+            [matDatepicker]="endPicker"
+            (dateChange)="sleepEndTimeChange($event)"
+            [placeholder]="'MEASUREMENT.SLEEP_ENDTIME' | translate"
+            readonly="true">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker type="datetime" startView="clock" #endPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <ng-container *ngIf="formUtils.hasErrors(form)">
+      <mat-error *ngIf="formUtils.getError('validateSleepTimes'); else default">{{ formUtils.getError('validateSleepTimes') | translate }}</mat-error>
+      <ng-template #default>
+        <mat-error>{{ 'NOTIFY.ERROR.COMPLETE_ONE_FIELD' | translate }}</mat-error>
+      </ng-template>
+    </ng-container>
+
+    <div class="action-buttons">
+      <a mat-button color="primary" (click)="onSubmit()" class="ccr-icon-button">
+        <mat-icon>add</mat-icon>
+        {{ 'BOARD.ADD_MEASUREMENT' | translate }}
+      </a>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,44 @@
+<div class="ccr-container">
+  <mat-grid-list [cols]="cols" rowHeight="3:2">
+
+    <mat-grid-tile>
+      <progress-circle class="calories"
+        [headertext]="'GRAPH.DAILY_AVG_CALORIES' | translate"
+        [value]="data.calories.avg"
+        [maximumvalue]="data.calories.goal">
+      </progress-circle>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <progress-circle class="protein"
+        [headertext]="'GRAPH.DAILY_AVG_PROTEIN' | translate"
+        [value]="data.protein.avg / 1000"
+        [maximumvalue]="data.protein.goal"
+        [measurementUnit]="'g'">
+      </progress-circle>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <progress-circle class="carb"
+        [headertext]="'GRAPH.DAILY_AVG_CARB' | translate"
+        [value]="data.carbohydrate.avg / 1000"
+        [maximumvalue]="data.carbohydrate.goal"
+        [measurementUnit]="'g'">
+      </progress-circle>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <progress-circle class="fat"
+        [headertext]="'GRAPH.DAILY_AVG_FAT' | translate"
+        [value]="data.totalFat.avg / 1000"
+        [maximumvalue]="data.totalFat.goal"
+        [measurementUnit]="'g'">
+      </progress-circle>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>
+
+<app-dieter-journal-food-table
+  [source]="source"
+></app-dieter-journal-food-table>

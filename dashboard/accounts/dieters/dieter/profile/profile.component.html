@@ -1,0 +1,13 @@
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+  <app-dieter-form #dieter bindForm="dieter" [dieterId]="dieterId"></app-dieter-form>
+
+  <button mat-raised-button color="primary">
+    <mat-icon>check</mat-icon> {{'BOARD.USER_UPDATE' | translate}}
+  </button>
+</form>
+
+<div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="isLoading || dieter.isLoading">
+  <mat-spinner></mat-spinner>
+</div>

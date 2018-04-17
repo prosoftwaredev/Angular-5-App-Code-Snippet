@@ -1,0 +1,33 @@
+<div class="ccr-heading">
+  <div class="ccr-title" fxLayout="row" fxLayoutAlign=" end">
+    <h2 fxFlex>{{'SIDENAV.ALERTS' | translate}}</h2>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutWrap fxLayoutGap="2%" fxLayoutGap.xs="0" class="ccr-alerts">
+
+  <mat-form-field fxFlex="33%" fxFlex.xs="100%" floatPlaceholder="never" class="ccr-filter">
+    <mat-select
+    [(ngModel)]="clinic"
+    (change)="selectClinic(clinic)"
+    [placeholder]="'REPORTS.FILTER_CLINICS' | translate">
+      <mat-option *ngFor="let clinic of clinics" [value]="clinic.value">
+        {{ clinic.viewValue | translate | uppercase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="25%" fxFlex.xs="100%" floatPlaceholder="never" class="ccr-filter">
+    <mat-select
+    [(ngModel)]="alert"
+    (change)="refresh()"
+    [placeholder]="'REPORTS.FILTER_ALERTS' | translate">
+      <mat-option *ngFor="let alert of alerts" [value]="alert.value">
+        {{ alert.viewValue | translate | uppercase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+<app-alerts-table [source]="source"></app-alerts-table>

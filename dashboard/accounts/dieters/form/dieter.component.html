@@ -1,0 +1,116 @@
+<ng-container [formGroup]="form">
+  <mat-grid-list class="ccr-grid" [cols]="colSpan" rowHeight="70px">
+
+    <mat-grid-tile>
+      <mat-form-field class="ccr-iconfix">
+        <input matInput required formControlName="firstName" [placeholder]="'BOARD.FIRST_NAME' | translate">
+        <mat-icon matSuffix *ngIf="dieterId">mode_edit</mat-icon>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field class="ccr-iconfix">
+        <input matInput required formControlName="lastName" [placeholder]="'BOARD.LAST_NAME' | translate">
+        <mat-icon matSuffix *ngIf="dieterId">mode_edit</mat-icon>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field class="ccr-iconfix">
+        <input matInput required email type="email" formControlName="email" [placeholder]="'BOARD.EMAIL' | translate">
+        <mat-icon matSuffix *ngIf="dieterId">mode_edit</mat-icon>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field class="ccr-iconfix">
+        <input matInput required formControlName="clientPhone" [placeholder]="'BOARD.PHONE' | translate">
+        <mat-icon matSuffix *ngIf="dieterId">mode_edit</mat-icon>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput required formControlName="clientBirthday" [placeholder]="'BOARD.DATE_OF_BIRTH' | translate"
+          [matDatepicker]="pickerBirth" readonly="true">
+        <mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
+        <mat-datepicker #pickerBirth></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field>
+        <mat-select required formControlName="clinic" [placeholder]="'BOARD.CLINIC' | translate">
+          <mat-option *ngFor="let clinic of clinics" [value]="clinic.value">
+            {{ clinic.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field>
+        <mat-select required formControlName="clientGender" [placeholder]="'BOARD.GENDER' | translate">
+          <mat-option *ngFor="let gender of genders" [value]="gender.value">
+            {{ gender.viewValue | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile [rowspan]="rowSpan ? 2 : 1">
+      <div class="ccr-subgrid" fxLayout="row" fxLayoutWrap.xs fxLayoutGap.gt-xs="2%">
+        <div fxLayout="row" fxLayoutAlign=" center" fxFlex.gt-xs="49%" fxFlex.xs="100%">
+          <mat-form-field class="ccr-align-right">
+            <mat-select required formControlName="clientFeet" [placeholder]="'BOARD.HEIGHT' | translate">
+              <mat-option class="ccr-align-right" *ngFor="let feet of feets" [value]="feet">{{ feet }}</mat-option>
+            </mat-select>
+            <span matSuffix>{{'UNIT.FEET' | translate}}</span>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign=" center" fxFlex.gt-xs="49%" fxFlex.xs="100%">
+          <mat-form-field class="ccr-align-right">
+            <mat-select required formControlName="clientInches" floatPlaceholder="never">
+              <mat-option class="ccr-align-right" *ngFor="let inch of inches" [value]="inch">{{ inch }}</mat-option>
+            </mat-select>
+            <span matSuffix>{{'UNIT.INCHES' | translate}}</span>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput formControlName="startDate" [placeholder]="'BOARD.START_DATE' | translate"
+          [matDatepicker]="pickerStart" readonly="true">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field>
+        <mat-select required formControlName="timezone" [placeholder]="'BOARD.TIME_ZONE' | translate">
+          <mat-option *ngFor="let timezone of timezones" [value]="timezone.code">
+            {{ timezone.lang[lang] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field class="ccr-align-right">
+        <input matInput formControlName="weightInitial" type="number" placeholder="{{'BOARD.INITIAL_WEIGHT' | translate}} ({{'BOARD.OPTIONAL' | translate}})">
+        <span matSuffix>{{'UNIT.POUNDS' | translate}}</span>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field class="ccr-align-right">
+        <input matInput formControlName="weightGoal" type="number" placeholder="{{'BOARD.WEIGHT_GOAL' | translate}} ({{'BOARD.OPTIONAL' | translate}})">
+        <span matSuffix>{{'UNIT.POUNDS' | translate}}</span>
+      </mat-form-field>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</ng-container>

@@ -1,0 +1,67 @@
+<div class="ccr-table ccr-expand-table" [class.ccr-loading]="source.isLoading" [class.ccr-empty]="source.isEmpty" [class.ccr-errors]="source.hasErrors()">
+
+  <mat-table [dataSource]="source">
+
+    <ng-container cdkColumnDef="date">
+      <mat-header-cell *cdkHeaderCellDef>{{'GLOBAL.DATE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <div (click)="toggleRow(row)" class="expandable" [ngClass]="{ 'non-empty': !row.isEmpty && row.level < 2 }" fxLayoutAlign=" center">
+          <i *ngIf="row.level < 2 && row.calories > 0" aria-hidden="true"
+            class="material-icons" [class.active]="row.isExpanded">
+          </i>
+
+          {{ row.level === 0 ? (row.consumedDate | amUtc | amDateFormat:'dddd, MMM D') : (row.level === 1 ? (row.type | translate) : row.name) }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="calories">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.CALORIES' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'BOARD.CALORIES' | translate}}</span>
+        {{ row.calories }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="protein">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.PROTEIN' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'BOARD.PROTEIN' | translate}}</span>
+        {{ (row.protein / 1000).toFixed(1) }}g
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="carb">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.CARB' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'BOARD.CARB' | translate}}</span>
+        {{ (row.carbohydrate / 1000).toFixed(1) }}g
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="fat">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.FAT' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'BOARD.FAT' | translate}}</span>
+        {{ (row.totalFat / 1000).toFixed(1) }}g
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *cdkHeaderRowDef="columns" fxHide.xs></mat-header-row>
+    <mat-row fxLayout="row" fxLayoutWrap *cdkRowDef="let row; columns: columns; let even = even; let odd = odd; let index = index"
+      class="level{{row.level}}" [ngClass]="{
+        'row-even': even,
+        'row-odd': odd,
+        'hidden': row.isHidden,
+        'row-expanded': row.isExpanded,
+        'row-nested': row.level > 0
+      }"></mat-row>
+  </mat-table>
+
+  <div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="source.isLoading || source.hasErrors()">
+    <mat-spinner *ngIf="source.isLoading"></mat-spinner>
+    <div class="ccr-errors" *ngIf="!source.isLoading && source.hasErrors()">
+      <span *ngFor="let error of source.getErrors()">{{error | translate}}</span>
+    </div>
+  </div>
+</div>

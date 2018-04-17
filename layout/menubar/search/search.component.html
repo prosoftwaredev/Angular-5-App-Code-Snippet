@@ -1,0 +1,14 @@
+<div>
+  <ccr-icon-search [fill]="fill" [size]="20" [stroke]="5"></ccr-icon-search>
+  <input type="text" class="search-box" [placeholder]="'MENU.SEARCH' | translate" [matAutocomplete]="auto" [formControl]="searchCtrl">
+
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let account of accounts" (onSelectionChange)="select(account)">
+      <p matLine>
+        {{ account.firstName + ' ' + account.lastName }}
+        <span>{{ formatAccountType(account.accountType) | translate }}</span>
+      </p>
+      <p matLine class="email">{{ account.email }}</p>
+    </mat-option>
+  </mat-autocomplete>
+</div>

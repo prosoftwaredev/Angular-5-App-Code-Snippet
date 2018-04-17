@@ -1,0 +1,43 @@
+
+<div class="ccr-container-mini" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="center stretch" fxLayoutWrap.xs>
+  <ul class="ccr-tabs-center" fxLayout="row" fxLayoutAlign="start stretch">
+    <li><a mat-button [routerLink]="['.', {s: 'composition'}]" [class.active]="section === 'composition'">{{ 'GLOBAL.COMPOSITION' | translate }}</a></li>
+    <li><a mat-button [routerLink]="['.', {s: 'circumference'}]" [class.active]="section === 'circumference'">{{ 'GLOBAL.CIRCUMFERENCE' | translate }}</a></li>
+    <li><a mat-button [routerLink]="['.', {s: 'energy'}]" [class.active]="section === 'energy'">{{ 'GLOBAL.ENERGY' | translate }}</a></li>
+    <li><a mat-button [routerLink]="['.', {s: 'food'}]" [class.active]="section === 'food'">{{ 'GLOBAL.FOOD' | translate }}</a></li>
+  </ul>
+
+  <a mat-button class="ccr-icon-button" fxFlex="0 0 150px" fxFlex.xs="100%" (click)="toggleView()">
+    <mat-icon *ngIf="view === 'table'">show_chart</mat-icon>
+    <span *ngIf="view === 'table'">{{ 'BOARD.VIEW_AS_CHART' | translate }}</span>
+
+    <mat-icon *ngIf="view === 'chart'">view_headline</mat-icon>
+    <span *ngIf="view === 'chart'">{{ 'BOARD.VIEW_AS_TABLE' | translate }}</span>
+  </a>
+</div>
+
+<date-navigator [timeframe]="timeframe" [date]="dates.current" (selectedDate)="updateDates($event)"></date-navigator>
+
+<div class="ccr-dashboard-pane" [ngSwitch]="view">
+  <ng-container *ngSwitchCase="'chart'">
+
+    <app-dieter-measurements-chart
+      [embedded]="true"
+      [source]="source"
+      [metrics]="columns"
+      [measurement]="measurement"
+      [timeframe]="timeframe"
+      [views]="['week', 'month', 'year']"
+      (change)="chartChanged($event)"
+    ></app-dieter-measurements-chart>
+
+  </ng-container>
+  <ng-container *ngSwitchCase="'table'">
+
+    <app-dieter-measurements-table
+      [source]="source"
+      [columns]="columns"
+    ></app-dieter-measurements-table>
+
+  </ng-container>
+</div>

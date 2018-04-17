@@ -1,0 +1,12 @@
+@import 'variables';
+
+@media #{$medium-only} {
+  ccr-select-user,
+  ccr-select-user + div {
+    padding-top: 7px;
+  }
+}
+
+date-navigator {
+  margin-top: 10px;
+}

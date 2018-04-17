@@ -1,0 +1,12 @@
+
+<div class="ccr-heading">
+  <div class="ccr-title" fxLayout="row" fxLayoutAlign=" end">
+    <h2 fxFlex>{{'BOARD.CLINICS' | translate}}</h2>
+  </div>
+
+  <!-- <div class="ccr-htools" fxLayout="row" fxLayoutAlign=" center">
+    <ccr-paginator #paginator [length]="source.total" [pageIndex]="0" [pageSize]="20"></ccr-paginator>
+  </div> -->
+</div>
+
+<app-clinics-table [source]="source"></app-clinics-table>

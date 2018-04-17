@@ -1,0 +1,49 @@
+<div class="ccr-table" [class.ccr-loading]="source.isLoading" [class.ccr-empty]="source.isEmpty" [class.ccr-errors]="source.hasErrors()">
+
+  <mat-table [dataSource]="source">
+
+    <ng-container cdkColumnDef="date">
+      <mat-header-cell *cdkHeaderCellDef>{{'GLOBAL.DATE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+          <span>{{'GLOBAL.DATE' | translate}}</span>
+          {{row.date | amUtc | amDateFormat:'dddd, MMM D'}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="amount">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.AMOUNT' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+          <span>{{'BOARD.AMOUNT' | translate}}</span>
+          {{row.total | toOunces}} {{'UNIT.OZ' | translate}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="dailygoal">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.DAILY_GOAL_PERC' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{'BOARD.DAILY_GOAL_PERC' | translate}}</span>
+        <ng-container *ngIf="row.dailyGoal !== null; then withGoal else notGoal"></ng-container>
+        <ng-template #withGoal>
+          <mat-icon class="done" *ngIf="row.dailyGoal >= 100; else notDone">done</mat-icon>
+          <ng-template #notDone>{{row.dailyGoal}}%</ng-template>
+        </ng-template>
+        <ng-template #notGoal>-</ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *cdkHeaderRowDef="columns" fxHide.xs></mat-header-row>
+    <mat-row fxLayout="row" fxLayoutWrap
+      *cdkRowDef="let row; columns: columns; let even = even; let odd = odd"
+      [ngClass]="{
+        'row-even': even,
+        'row-odd': odd
+      }"></mat-row>
+  </mat-table>
+
+  <div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="source.isLoading || source.hasErrors()">
+    <mat-spinner *ngIf="source.isLoading"></mat-spinner>
+    <div class="ccr-errors" *ngIf="!source.isLoading && source.hasErrors()">
+      <span *ngFor="let error of source.getErrors()">{{error | translate}}</span>
+    </div>
+  </div>
+</div>

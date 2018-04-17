@@ -1,0 +1,84 @@
+<div class="ccr-dashboard">
+  <div fxLayout="row" fxLayoutGap="1%">
+
+    <ccr-stat-diff fxFlex="1 0 100px"
+      title="{{ 'STATS.WEIGHT_CHANGE' | translate }} ({{ 'UNIT.LBS' | translate }})"
+      [starting]="data.starting.weight"
+      [current]="data.current.weight"
+    ></ccr-stat-diff>
+
+    <ccr-stat-diff fxFlex="1 0 100px"
+      title="{{ 'STATS.BODYFAT_CHANGE' | translate }} ({{ 'UNIT.LBS' | translate }})"
+      [starting]="data.starting.bodyFat"
+      [current]="data.current.bodyFat"
+    ></ccr-stat-diff>
+
+    <ccr-stat-diff fxFlex="1 0 100px"
+      title="{{ 'STATS.LEANMASS_CHANGE' | translate }} ({{ 'UNIT.LBS' | translate }})"
+      [starting]="data.starting.leanMass"
+      [current]="data.current.leanMass"
+    ></ccr-stat-diff>
+
+    <ccr-stat-diff fxFlex="1 0 100px"
+      title="{{ 'STATS.WATERMASS_CHANGE' | translate }} ({{ 'UNIT.LBS' | translate }})"
+      [starting]="data.starting.waterMass"
+      [current]="data.current.waterMass"
+    ></ccr-stat-diff>
+
+    <ccr-stat-diff fxFlex="1 0 100px"
+      title="{{ 'MEASUREMENT.BMI' | translate }}"
+      [starting]="data.starting.BMI"
+      [current]="data.current.BMI"
+    ></ccr-stat-diff>
+
+    <ccr-stat-single fxFlex="1 0 100px" (edit)="setupActivityLevel()"
+      [isLoading]="data.isBMRLoading"
+      [isEditable]="true"
+      title="{{ 'MEASUREMENT.BMR' | translate }}"
+      [value]="data.BMR">
+
+      <div>
+        {{ 'STATS.ACTIVITY_LEVEL' | translate }}
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-select #activity="matSelect" [(ngModel)]="selectedActivityLevel" (change)="selectActivityLevel(selectedActivityLevel)">
+            <mat-option class="ccr-align-center" *ngFor="let activityLevel of activityLevels" [value]="activityLevel.value">
+              {{ activityLevel.viewValue | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </ccr-stat-single>
+
+    <!-- TODO update phase information in further tickets -->
+    <!--
+    <div class="stats-big clickable" fxFlex="1 0 100px" fxLayout="column" fxLayoutAlign="space-between">
+      <div class="metric-heading" fxLayoutAlign="center center">
+        <span>{{ 'STATS.PHASE' | translate }} </span>
+      </div>
+      <div class="metric-number phase-name">
+        {{ 'Weight Loss' }}
+      </div>
+      <div class="metric-text">
+        <div>
+          {{ 'Starting date' }}
+        </div>
+        <div>
+          {{ '07/13/2017' }}
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+</div>
+
+<app-dieter-measurements-chart fxLayout="column"
+  [source]="source"
+  [metrics]="['weight', 'bmi', 'bodyFat', 'leanMass', 'steps', 'total']"
+  [views]="['week', 'month', 'year', 'alltime']"
+></app-dieter-measurements-chart>
+
+<div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="data.isLoading">
+  <mat-spinner></mat-spinner>
+</div>

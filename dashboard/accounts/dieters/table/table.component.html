@@ -1,0 +1,60 @@
+<div class="ccr-table" [class.ccr-loading]="source.isLoading" [class.ccr-empty]="source.isEmpty" [class.ccr-errors]="source.hasErrors()">
+
+  <mat-table [dataSource]="source">
+
+    <ng-container cdkColumnDef="name">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.NAME' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%" (click)="showDieter(row.id)" class="clickable">
+        <span>{{'BOARD.NAME' | translate}}</span>
+        <div class="edit-icon-container">
+          {{row.firstName}} {{row.lastName}}
+          <button class="edit-icon" mat-icon-button title="Edit" (click)="onEdit(row); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="email">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.EMAIL' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%" (click)="showDieter(row.id)" class="clickable">
+        <span>{{'BOARD.EMAIL' | translate}}</span>
+        <div class="edit-icon-container">
+          {{row.email}}
+          <button class="edit-icon" mat-icon-button title="Edit" (click)="onEdit(row); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="created">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.REG_DATE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%" (click)="showDieter(row.id)" class="clickable">
+        <span>{{'BOARD.REG_DATE' | translate}}</span> {{ row.createdOn | amUtc | amDateFormat:'LL' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="actions">
+      <mat-header-cell *cdkHeaderCellDef>{{'BOARD.REMOVE' | translate}}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign="center center" fxLayoutAlign.xs=" center" fxFlex.xs="100%">
+        <span (click)="onRemove(row)">{{'BOARD.REMOVE' | translate}}</span>
+        <button mat-icon-button title="{{'BOARD.REMOVE' | translate}}" (click)="onRemove(row)"><mat-icon>delete</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *cdkHeaderRowDef="columns" fxHide.xs></mat-header-row>
+    <mat-row fxLayout="row" fxLayoutWrap *cdkRowDef="let row; columns: columns; let even = even; let odd = odd"
+      [ngClass]="{
+        'row-even': even,
+        'row-odd': odd
+      }"></mat-row>
+  </mat-table>
+
+  <div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="source.isLoading || source.hasErrors()">
+    <mat-spinner *ngIf="source.isLoading"></mat-spinner>
+    <div class="ccr-errors" *ngIf="!source.isLoading && source.hasErrors()">
+      <span *ngFor="let error of source.getErrors()">{{error | translate}}</span>
+    </div>
+  </div>
+</div>

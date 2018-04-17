@@ -1,0 +1,15 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+  <app-coach-form #coach bindForm="coach"
+    [coachId]="coachId"
+    [styled]="true"
+  ></app-coach-form>
+
+  <button mat-raised-button color="primary">
+    <mat-icon>check</mat-icon> {{'BOARD.COACH_UPDATE' | translate}}
+  </button>
+</form>
+
+<div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="isLoading || coach.isLoading">
+  <mat-spinner></mat-spinner>
+</div>

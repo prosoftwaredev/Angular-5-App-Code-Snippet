@@ -1,0 +1,55 @@
+<ng-container>
+  <form class="mt-20" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <mat-grid-list class="ccr-grid" [cols]="colSpan" rowHeight="70px">
+
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput required formControlName="firstName" [placeholder]="'BOARD.FIRST_NAME' | translate">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput required formControlName="lastName" [placeholder]="'BOARD.LAST_NAME' | translate">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="colSpan">
+        <mat-form-field>
+          <input matInput required email type="email" formControlName="email" [placeholder]="'BOARD.EMAIL' | translate">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select required formControlName="timezone" [placeholder]="'BOARD.TIME_ZONE' | translate">
+            <mat-option *ngFor="let timezone of timezones" [value]="timezone.code">
+              {{ timezone.lang[lang] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select required formControlName="measurementPreference" [placeholder]="'BOARD.UNITS_PREFERENCE' | translate">
+            <mat-option *ngFor="let unit of units" [value]="unit.value">
+              {{ unit.viewValue | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+  <div class="mt-40" fxLayoutAlign="center">
+    <button mat-button color="primary" class="ccr-icon-button" (click)="onSubmit()">
+      <mat-icon>check</mat-icon> {{'GLOBAL.SAVE' | translate}}
+    </button>
+  </div>
+
+</ng-container>
+

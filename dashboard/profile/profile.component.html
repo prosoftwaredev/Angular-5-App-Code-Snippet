@@ -1,0 +1,13 @@
+
+<div class="ccr-heading">
+  <div class="ccr-name" fxLayout="row" fxLayoutAlign.xs="center">
+    <ccr-avatar size="bigger" [account]="profile?.id" [editable]="true"></ccr-avatar>
+    <h2>{{'BOARD.PROFILE' | translate}}</h2>
+  </div>
+</div>
+
+<account-form [profile]="profile" (onProfileSaved)="saveProfile($event)" *ngIf="!isLoading"></account-form>
+
+<div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="isLoading || isSaving">
+  <mat-spinner></mat-spinner>
+</div>

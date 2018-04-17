@@ -1,0 +1,11 @@
+<div class="item">
+  <div class="item-heading">
+    <mat-icon>stop</mat-icon>
+    <span>{{ note.consultationTime | amUtc | amDateFormat:'LL' }}</span>
+  </div>
+  <div (click)="toggleCompleteNote()" [ngClass]="{'item-body': true, 'clickable': noteHasOverflow(note.internalNote)}">
+    {{ note.providerName }}
+    <br />
+    {{ !note.internalNote ? ('BOARD.NO_MESSAGE' | translate) : (note.internalNote | maxChars: maxChars) }}
+  </div>
+</div>

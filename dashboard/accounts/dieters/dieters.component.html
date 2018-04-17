@@ -1,0 +1,31 @@
+
+<div class="ccr-heading">
+  <div class="ccr-title" fxLayout="row" fxLayoutAlign=" end" fxLayoutWrap.xs>
+    <h2 fxFlex>{{'BOARD.RECENT_REG' | translate}}</h2>
+  </div>
+</div>
+
+<app-dieters-table [source]="recentsSource" [editable]="true"></app-dieters-table>
+
+<div class="ccr-heading">
+  <div class="ccr-title" fxLayout="row" fxLayoutAlign=" end" fxLayoutWrap.xs>
+    <h2 fxFlex>{{'GLOBAL.PATIENTS' | translate}}</h2>
+
+    <a mat-button color="primary" class="ccr-icon-button"
+    fxFlex="0 0 auto" fxFlex.xs="100%"
+    *ngIf="permissions.admin" (click)="createDialog()">
+      <mat-icon>add</mat-icon>
+      <span>{{'BOARD.PATIENT_NEW' | translate}}</span>
+    </a>
+  </div>
+  <div class="ccr-htools" fxLayout="row" fxLayoutAlign=" center">
+    <mat-form-field class="ccr-mini" floatPlaceholder="never">
+      <mat-select placeholder="{{'BOARD.CLINIC' | translate}}" [(ngModel)]="clinic" (change)="selectClinic(clinic)">
+        <mat-option *ngFor="let clinic of clinics" [value]="clinic.value">{{ clinic.viewValue }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ccr-paginator #paginator [length]="dietersSource.total" [pageIndex]="0" [pageSize]="10"></ccr-paginator>
+  </div>
+</div>
+
+<app-dieters-table [source]="dietersSource" [editable]="true"></app-dieters-table>

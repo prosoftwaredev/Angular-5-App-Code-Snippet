@@ -1,0 +1,34 @@
+
+<div matDialogTitle>
+  <div>
+    <mat-icon>add_circle_outline</mat-icon>
+    <span>{{'BOARD.ADD_NEW_NOTE' | translate}}</span>
+  </div>
+  <button matDialogClose><mat-icon>cancel</mat-icon></button>
+</div>
+
+<div class="mat-dialog-separator"></div>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <mat-form-field fxLayoutAlign="center">
+        <input matInput formControlName="consultationDate" readonly="true"
+        [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [placeholder]="'GLOBAL.DATE' | translate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxLayoutAlign="center">
+        <textarea matInput matTextareaAutosize matAutosizeMinRows="7" formControlName="internalNote" [placeholder]="'BOARD.NOTES' | translate" value=""></textarea>
+      </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button color="primary" class="ccr-icon-button" (click)="onSubmit()">
+    <mat-icon>check</mat-icon> {{'GLOBAL.SAVE' | translate}}
+  </button>
+
+  <button mat-button class="ccr-icon-button" matDialogClose>
+    <mat-icon>close</mat-icon> {{'GLOBAL.CANCEL' | translate}}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,22 @@
+
+<div class="ccr-heading">
+  <a mat-button color="primary" class="ccr-button" routerLink="/accounts/coaches">
+    {{'BOARD.BACK_LIST' | translate}}
+  </a>
+
+  <div class="ccr-name" fxLayout="row">
+    <ccr-avatar size="bigger" [account]="coach?.id"></ccr-avatar>
+    <h2 fxFlex>{{ coach?.firstName | capitalize }} {{ coach?.lastName | capitalize }}</h2>
+  </div>
+</div>
+
+<!--
+<div class="ccr-tabs" fxLayout="row" fxLayoutAlign=" stretch" fxLayoutGap="5px">
+  <a fxFlex fxLayoutAlign="center center" ccrLinkActive="active" [routerLink]="['profile']"> Profile & Permission </a>
+  <a fxFlex fxLayoutAlign="center center" ccrLinkActive="active" [routerLink]="['schedule']"> Schedule </a>
+</div>
+ -->
+
+<div class="ccr-subcomponent">
+  <router-outlet></router-outlet>
+</div>

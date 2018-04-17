@@ -1,0 +1,16 @@
+<mat-toolbar [color]="palette.toolbar" routerLink="/">
+  <!-- logo as background here -->
+</mat-toolbar>
+
+<mat-nav-list [disableRipple]="false" [class.open]="isOpen">
+  <div class="sidenav-search-container">
+    <app-search [fill]="palette.base"></app-search>
+  </div>
+
+  <app-sidenav-item
+    *ngFor="let sidenavItem of sidenavItems"
+    [sidenavItem]="sidenavItem"
+    [isSidenavOpen]="isOpen"
+    [parent]="_this"
+  ></app-sidenav-item>
+</mat-nav-list>

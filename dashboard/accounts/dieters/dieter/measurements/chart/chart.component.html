@@ -1,0 +1,50 @@
+<div fxLayout="row" fxLayoutWrap fxLayoutGap="2%" fxLayoutGap.xs="0">
+  <mat-form-field fxFlex="49%" fxFlex.xs="100%"
+  class="ccr-align-center" [floatPlaceholder]="embedded ? 'never' : 'always'">
+    <mat-select
+    [placeholder]="'BOARD.MEASURE' | translate"
+    [(ngModel)]="measurement" (change)="refresh()">
+      <mat-option *ngFor="let type of measurements" [value]="type.value"
+      class="ccr-align-center" [class.ccr-embedded]="embedded">
+        {{ type.viewValue | translate | uppercase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="49%" fxFlex.xs="100%"
+  class="ccr-align-center" [floatPlaceholder]="embedded ? 'never' : 'always'">
+    <mat-select
+    [placeholder]="'BOARD.VIEW_BY' | translate"
+    [(ngModel)]="timeframe" (change)="refresh()">
+      <mat-option *ngFor="let view of viewby" [value]="view.value"
+      class="ccr-align-center" [class.ccr-embedded]="embedded">
+        {{ view.viewValue | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<date-navigator fxFlex="100%" *ngIf="!embedded"
+  [timeframe]="timeframe"
+  [date]="dates.current"
+  (selectedDate)="updateDates($event)"
+></date-navigator>
+
+<div class="ccr-container">
+  <canvas *ngIf="chart && !source.hasErrors()" baseChart #myChart
+    width="500" height="400"
+    [chartType]="chart.type"
+    [datasets]="chart.datasets"
+    [labels]="chart.labels"
+    [options]="chart.options"
+    [legend]="chart.legend"
+    [colors]="chart.colors"
+  ></canvas>
+
+  <div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="source.isLoading || source.hasErrors()">
+    <mat-spinner *ngIf="source.isLoading"></mat-spinner>
+    <div class="ccr-errors" *ngIf="!source.isLoading && source.hasErrors()">
+      <span *ngFor="let error of source.getErrors()">{{error | translate}}</span>
+    </div>
+  </div>
+</div>

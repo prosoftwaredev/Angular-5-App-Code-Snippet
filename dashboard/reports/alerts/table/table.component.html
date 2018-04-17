@@ -1,0 +1,44 @@
+<div class="ccr-table" [class.ccr-loading]="source?.isLoading" [class.ccr-empty]="source?.isEmpty" [class.ccr-errors]="source?.hasErrors()">
+
+  <mat-table [dataSource]="source">
+
+    <ng-container cdkColumnDef="name">
+      <mat-header-cell *cdkHeaderCellDef>{{ 'BOARD.NAME' | translate }}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%" (click)="showDieter(row.triggeredBy)" class="clickable">
+        <span>{{ 'BOARD.NAME' | translate }}</span> {{ row.triggeredBy.firstName }} {{ row.triggeredBy.lastName }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="type">
+      <mat-header-cell *cdkHeaderCellDef>{{ 'REPORTS.ALERT_TYPE' | translate }}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{ 'REPORTS.ALERT_TYPE' | translate }}</span>
+        <img src="{{ row.icon }}" height="24" />
+        {{ row.detail | translate }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="details">
+      <mat-header-cell *cdkHeaderCellDef>{{ 'BOARD.DETAILS' | translate }}</mat-header-cell>
+      <mat-cell *cdkCellDef="let row" fxLayoutAlign=" center" fxFlex.xs="100%">
+        <span>{{ 'BOARD.DETAILS' | translate }}</span>
+        {{ row.detail | translate }}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *cdkHeaderRowDef="columns" fxHide.xs></mat-header-row>
+    <mat-row fxLayout="row" fxLayoutWrap *cdkRowDef="let row; columns: columns; let even = even; let odd = odd"
+      [ngClass]="{
+        'row-even': even,
+        'row-odd': odd
+      }">
+    </mat-row>
+  </mat-table>
+
+  <div fxLayoutAlign="center center" class="ccr-overlay" *ngIf="source?.isLoading || source?.hasErrors()">
+    <mat-spinner *ngIf="source?.isLoading"></mat-spinner>
+    <div class="ccr-errors" *ngIf="!source?.isLoading && source?.hasErrors()">
+      <span *ngFor="let error of source?.getErrors()">{{error | translate}}</span>
+    </div>
+  </div>
+</div>
